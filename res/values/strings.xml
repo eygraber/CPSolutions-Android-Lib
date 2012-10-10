@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CPSolutions</string>
+    <string name="prefs_separator">;</string>
+</resources>
