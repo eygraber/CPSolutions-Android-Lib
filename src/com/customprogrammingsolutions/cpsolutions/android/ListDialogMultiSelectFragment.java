@@ -74,6 +74,9 @@ public class ListDialogMultiSelectFragment extends AbstractListDialogFragment im
 		
 		this.pbcl = this;
 		
+		builder.setTitle(title);
+		builder.setMessage(null);
+		
 		// Initialize the array of boolean to the same size as number of entries
         mClickedDialogEntryIndices = new boolean[entries.length];
         if(entries == null || entryValues == null || entries.length != entryValues.length ) {

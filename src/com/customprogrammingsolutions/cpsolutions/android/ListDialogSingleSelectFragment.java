@@ -61,6 +61,10 @@ public class ListDialogSingleSelectFragment extends AbstractListDialogFragment i
 		valueToCheck = args.getInt("valueToCheck");
 		
 		this.pbcl = this;
+		
+		builder.setTitle(title);
+		builder.setMessage(null);
+		
         if(entries == null || entryValues == null || entries.length != entryValues.length ) {
             throw new IllegalStateException("ListDialogSingleSelectFragment requires an entries array and an entryValues array which are both the same length");
         }
