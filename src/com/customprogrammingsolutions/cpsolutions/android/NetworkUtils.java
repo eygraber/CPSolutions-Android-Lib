@@ -16,6 +16,8 @@
 
 package com.customprogrammingsolutions.cpsolutions.android;
 
+import java.text.DecimalFormat;
+
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -39,26 +41,27 @@ public class NetworkUtils {
 		if(bytes < 1) {
 			return "0 B";
 		}
+		DecimalFormat form = new DecimalFormat("0.00"); 
 		if(bytes / 1024 < 1) {
-			return bytes + " B";
+			return form.format(bytes) + " B";
 		}
 		bytes /= 1024;
 		if(bytes / 1204 < 1) {
-			return bytes + " kb";
+			return form.format(bytes) + " kb";
 		}
 		bytes /= 1204;
 		if(bytes / 1204 < 1) {
-			return bytes + " mb";
+			return form.format(bytes) + " mb";
 		}
 		bytes /= 1204;
 		if(bytes / 1204 < 1) {
-			return bytes + " gb";
+			return form.format(bytes) + " gb";
 		}
 		bytes /= 1204;
 		if(bytes / 1204 < 1) {
-			return bytes + " tb";
+			return form.format(bytes) + " tb";
 		}
 		bytes /= 1204;
-		return bytes + " pb";
+		return form.format(bytes) + " pb";
 	}
 }
