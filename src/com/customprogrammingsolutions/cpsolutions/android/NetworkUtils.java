@@ -34,4 +34,31 @@ public class NetworkUtils {
 	public static boolean isInCall(Context caller){
 		return ((TelephonyManager) caller.getSystemService(Context.TELEPHONY_SERVICE)).getCallState() != TelephonyManager.CALL_STATE_IDLE;	
 	}
+	
+	public static String getPrettyByteCount(float bytes) {
+		if(bytes < 1) {
+			return "0 B";
+		}
+		if(bytes / 1024 < 1) {
+			return bytes + " B";
+		}
+		bytes /= 1024;
+		if(bytes / 1204 < 1) {
+			return bytes + " kb";
+		}
+		bytes /= 1204;
+		if(bytes / 1204 < 1) {
+			return bytes + " mb";
+		}
+		bytes /= 1204;
+		if(bytes / 1204 < 1) {
+			return bytes + " gb";
+		}
+		bytes /= 1204;
+		if(bytes / 1204 < 1) {
+			return bytes + " tb";
+		}
+		bytes /= 1204;
+		return bytes + " pb";
+	}
 }
