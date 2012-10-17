@@ -3,6 +3,7 @@
 	<name>CPSolutions</name>
 	<comment></comment>
 	<projects>
+		<project>MySupportV4</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

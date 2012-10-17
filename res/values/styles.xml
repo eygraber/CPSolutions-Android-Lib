@@ -16,14 +16,17 @@
  -->
 <resources>
 
-    <style name="AppTheme" parent="android:Theme.Light" />
+    <style name="AppTheme" parent="android:Theme" />
     
-    <style name="NotificationText">
+    <style name="NotificationText" parent="android:TextAppearance.StatusBar.EventContent" />
+    <style name="NotificationTitle" parent="android:TextAppearance.StatusBar.EventContent.Title" />
+    
+    <!-- <style name="NotificationText">
       <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
     <style name="NotificationTitle">
       <item name="android:textColor">?android:attr/textColorPrimary</item>
       <item name="android:textStyle">bold</item>
-    </style>
+    </style>  -->
 
 </resources>
