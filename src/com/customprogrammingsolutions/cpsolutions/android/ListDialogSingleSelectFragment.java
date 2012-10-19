@@ -33,6 +33,9 @@ public class ListDialogSingleSelectFragment extends AbstractListDialogFragment i
 		args.putString(NEGATIVE_BUTTON_LABEL_EXTRA, negativeButtonLabel);
 		args.putStringArray(ENTRIES_EXTRA, entries);
 		args.putStringArray(ENTRY_VALUES_EXTRA, entryValues);
+		if(valueToCheck < 0 || valueToCheck >= entries.length) {
+			valueToCheck = 0;
+		}
 		args.putInt("valueToCheck", valueToCheck);
 		dialog.setArguments(args);
 		
