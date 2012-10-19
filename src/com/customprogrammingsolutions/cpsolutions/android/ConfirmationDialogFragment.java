@@ -25,10 +25,12 @@ import android.support.v4.app.DialogFragment;
 
 public class ConfirmationDialogFragment extends DialogFragment {
 	protected String title = "";
+	protected String message = "";
 	protected String positiveButtonLabel = "";
 	protected String negativeButtonLabel = "";
 	
 	protected static String TITLE_EXTRA = "title";
+	protected static String MESSAGE_EXTRA = "message";
 	protected static String POSITIVE_BUTTON_LABEL_EXTRA = "positive_button_label";
 	protected static String NEGATIVE_BUTTON_LABEL_EXTRA = "negative_button_label";
 	
@@ -51,10 +53,11 @@ public class ConfirmationDialogFragment extends DialogFragment {
 		this.nbcl = nbcl;
 	}
 	
-	public static ConfirmationDialogFragment newInstance(String title, String positiveButtonLabel, String negativeButtonLabel) {
+	public static ConfirmationDialogFragment newInstance(String title, String message, String positiveButtonLabel, String negativeButtonLabel) {
 		ConfirmationDialogFragment dialog = new ConfirmationDialogFragment();
         Bundle args = new Bundle();
         args.putString(TITLE_EXTRA, title);
+        args.putString(MESSAGE_EXTRA, message);
         args.putString(POSITIVE_BUTTON_LABEL_EXTRA, positiveButtonLabel);
         args.putString(NEGATIVE_BUTTON_LABEL_EXTRA, negativeButtonLabel);
         dialog.setArguments(args);
@@ -94,12 +97,13 @@ public class ConfirmationDialogFragment extends DialogFragment {
 		setCancelable(false);
 		
 		title = getArguments().getString(TITLE_EXTRA);
+		message = getArguments().getString(MESSAGE_EXTRA);
 		positiveButtonLabel = getArguments().getString(POSITIVE_BUTTON_LABEL_EXTRA);
 		negativeButtonLabel = getArguments().getString(NEGATIVE_BUTTON_LABEL_EXTRA);
 
         Builder builder = new AlertDialog.Builder(getActivity());
-        //builder.setTitle(title);
-        builder.setMessage(title);
+        builder.setTitle(title);
+        builder.setMessage(message);
         setPositiveButton(builder);
         setNegativeButton(builder);
         onDialogBuildFinished(builder);
