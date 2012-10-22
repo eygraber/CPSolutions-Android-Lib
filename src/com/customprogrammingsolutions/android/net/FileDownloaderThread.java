@@ -1,4 +1,4 @@
-package com.customprogrammingsolutions.android;
+package com.customprogrammingsolutions.android.net;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -21,6 +21,7 @@ import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
 
+import com.customprogrammingsolutions.android.NetworkUtils;
 import com.customprogrammingsolutions.utils.DateTimeUtils;
 
 public class FileDownloaderThread extends Thread {
