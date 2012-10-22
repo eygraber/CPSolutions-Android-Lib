@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.customprogrammingsolutions.cpsolutions.android;
+package com.customprogrammingsolutions.android;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;

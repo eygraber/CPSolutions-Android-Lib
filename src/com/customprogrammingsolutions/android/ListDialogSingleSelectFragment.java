@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.customprogrammingsolutions.cpsolutions.android;
+package com.customprogrammingsolutions.android;
 
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
