@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.customprogrammingsolutions.android;
+package com.cpsolutions.android;
 
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
@@ -62,6 +62,10 @@ public class ListDialogSingleSelectFragment extends AbstractListDialogFragment i
 		entries = args.getStringArray(ENTRIES_EXTRA);
 		entryValues = args.getStringArray(ENTRY_VALUES_EXTRA);
 		valueToCheck = args.getInt("valueToCheck");
+		
+		//we set the checkedValue to the element at the index passed in.
+		//Otherwise if the dialog is dismissed without making a selection, we will return null
+		checkedValue = entryValues[valueToCheck];
 		
 		this.pbcl = this;
 		

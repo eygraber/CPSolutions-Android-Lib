@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.customprogrammingsolutions.android;
+package com.cpsolutions.android;
 
 import java.text.DecimalFormat;
 

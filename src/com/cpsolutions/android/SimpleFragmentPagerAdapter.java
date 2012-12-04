@@ -1,4 +1,4 @@
-package com.customprogrammingsolutions.android;
+package com.cpsolutions.android;
 
 import java.util.List;
 

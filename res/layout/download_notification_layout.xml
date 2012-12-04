@@ -29,7 +29,7 @@
         	android:id="@+id/notification_icon"
         	android:layout_width="fill_parent"
         	android:layout_height="wrap_content"
-        	android:src="@drawable/download_notification_icon" />
+        	android:src="@drawable/download_notification_icon_levels" />
         
         <TextView
         	android:id="@+id/notification_percent_done"

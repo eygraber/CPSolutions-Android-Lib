@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.customprogrammingsolutions.utils;
+package com.cpsolutions.android.utils;
 
 import android.content.Context;
 import android.media.AudioManager;
 
-public class Utils {
+public class AudioUtils {
 	public static int getVolumeAdjustedForGlobal(int volume, Context caller) {
 		final AudioManager audioManager = (AudioManager)caller.getSystemService(Context.AUDIO_SERVICE);
 		float maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);

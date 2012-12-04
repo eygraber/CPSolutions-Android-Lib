@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.customprogrammingsolutions.android;
+package com.cpsolutions.android;
 
 import java.util.prefs.InvalidPreferencesFormatException;
 
@@ -136,7 +136,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 				summary.setTextSize(summaryTextSize);
 		}
 		catch(Exception e){
-			//Utils.logThrowableIfDebug("onCreateView() - Error creating SeekBar for SeekBarPreference", Log.ERROR, e);
+			//AudioUtils.logThrowableIfDebug("onCreateView() - Error creating SeekBar for SeekBarPreference", Log.ERROR, e);
 		}
 		return layout;
 	}
@@ -158,7 +158,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 	        }
 		}
 		catch(Exception e){
-			//Utils.logThrowableIfDebug("onBindView() - Error binding seekbar to view for SeekBarPreference", Log.ERROR, e);
+			//AudioUtils.logThrowableIfDebug("onBindView() - Error binding seekbar to view for SeekBarPreference", Log.ERROR, e);
 		}
 
 		updateView(view);
@@ -182,7 +182,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 			
 		}
 		catch(Exception e){
-			//Utils.logThrowableIfDebug("updateView() - Error updating the seek bar view for SeekBarPreference", Log.ERROR, e);
+			//AudioUtils.logThrowableIfDebug("updateView() - Error updating the seek bar view for SeekBarPreference", Log.ERROR, e);
 		}
 		
 	}
@@ -236,7 +236,7 @@ public class SeekBarPreference extends Preference implements OnSeekBarChangeList
 				temp = (Integer)defaultValue;
 			}
 			catch(Exception e){
-				//Utils.logIfDebug("onSetInitialValue() - Invalid default value for SeekBarPreference: " + defaultValue.toString(), Log.ERROR);
+				//AudioUtils.logIfDebug("onSetInitialValue() - Invalid default value for SeekBarPreference: " + defaultValue.toString(), Log.ERROR);
 			}
 			
 			persistInt(temp);
