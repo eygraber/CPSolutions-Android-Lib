@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-package com.cpsolutions.android;
+package com.cpsolutions.android.app;
+
 
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;

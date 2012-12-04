@@ -14,12 +14,13 @@
  * limitations under the License.
  */
 
-package com.cpsolutions.android;
+package com.cpsolutions.android.app;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+
 
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;

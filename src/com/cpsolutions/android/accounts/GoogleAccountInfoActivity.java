@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.cpsolutions.android;
+package com.cpsolutions.android.accounts;
 
 import java.io.IOException;
 

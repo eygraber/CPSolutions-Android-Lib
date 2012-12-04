@@ -14,7 +14,8 @@
  * limitations under the License.
  */
 
-package com.cpsolutions.android;
+package com.cpsolutions.android.app;
+
 
 public class AbstractListDialogFragment extends ConfirmationDialogFragment {
 	protected static String ENTRIES_EXTRA = "entries";

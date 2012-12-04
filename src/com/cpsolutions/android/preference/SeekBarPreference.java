@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.cpsolutions.android;
+package com.cpsolutions.android.preference;
 
 import java.util.prefs.InvalidPreferencesFormatException;
 
