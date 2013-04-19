@@ -34,6 +34,16 @@ public class ConfirmationDialogFragment extends DialogFragment {
 	protected static String POSITIVE_BUTTON_LABEL_EXTRA = "positive_button_label";
 	protected static String NEGATIVE_BUTTON_LABEL_EXTRA = "negative_button_label";
 	
+	public interface OnResultReadyListener {
+		public void onResultReady(String result);
+	}
+	
+	protected OnResultReadyListener rrl;
+	
+	public void setOnResultReadyListener(OnResultReadyListener rrl) {
+		this.rrl = rrl;
+	}
+	
 	public interface OnPositiveButtonClickListener {
 		public void onClick(DialogInterface dialog);
 	}
@@ -110,6 +120,5 @@ public class ConfirmationDialogFragment extends DialogFragment {
 	    return builder.create();
 	}
 
-	protected void onDialogBuildFinished(Builder builder) {
-	}
+	protected void onDialogBuildFinished(Builder builder) {}
 }

@@ -19,18 +19,8 @@ package com.cpsolutions.android.app;
 
 public class AbstractListDialogFragment extends ConfirmationDialogFragment {
 	protected static String ENTRIES_EXTRA = "entries";
-	protected static String ENTRY_VALUES_EXTRA = "entryValues";
-	public interface OnResultReadyListener {
-		public void onResultReady(String result);
-	}
-	
-	protected OnResultReadyListener rrl;
-	
+	protected static String ENTRY_VALUES_EXTRA = "entryValues";	
 
 	protected String[] entries;
 	protected String[] entryValues;
-	
-	public void setOnResultReadyListener(OnResultReadyListener rrl) {
-		this.rrl = rrl;
-	}
 }
