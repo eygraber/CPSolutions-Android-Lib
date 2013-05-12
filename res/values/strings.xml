@@ -17,4 +17,11 @@
 <resources>
     <string name="app_name">CPSolutions</string>
     <string name="prefs_separator">;</string>
+    
+    <!-- For GoogleAccountListActivity if no accounts -->
+    <string name="needs_account">No accounts have been detected on this device. Would you like to add one?</string>
+    <string name="add_account_pos">Add Account</string>
+    <string name="add_account_neg">Don\'t Add Account</string>
+    <string name="add_account_title">Add Google Account</string>
+    
 </resources>

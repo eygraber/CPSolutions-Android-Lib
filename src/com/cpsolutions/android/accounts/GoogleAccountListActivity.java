@@ -18,10 +18,13 @@ package com.cpsolutions.android.accounts;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +48,27 @@ public class GoogleAccountListActivity extends ListActivity {
     	getListView().addHeaderView(tv);
     	accountManager = AccountManager.get(getApplicationContext());
     	Account[] accounts = accountManager.getAccountsByType("com.google");
-    	this.setListAdapter(new AccountArrayAdapter(this, R.layout.google_account_list_item, R.id.accountName, accounts));        
+    	if(accounts.length == 0) {
+    		// Show a dialog and invoke the "Add Account" activity if requested
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage(R.string.needs_account);
+            builder.setPositiveButton(R.string.add_account_pos, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(new Intent(Settings.ACTION_ADD_ACCOUNT));
+                }
+            });
+            builder.setNegativeButton(R.string.add_account_neg, new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            builder.setIcon(android.R.drawable.stat_sys_warning);
+            builder.setTitle(R.string.add_account_title);
+            builder.show();
+    	}
+    	else {
+    		this.setListAdapter(new AccountArrayAdapter(this, R.layout.google_account_list_item, R.id.accountName, accounts));
+    	}
     }
 
     @Override
