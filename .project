@@ -3,7 +3,6 @@
 	<name>cpsolutions_android_lib</name>
 	<comment></comment>
 	<projects>
-		<project>MySupportV4</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
