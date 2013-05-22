@@ -18,7 +18,7 @@ package com.cpsolutions.android.preference;
 
 import java.util.prefs.InvalidPreferencesFormatException;
 
-import com.customprogrammingsolutions.cpsolutions.R;
+import com.cpsolutions.R;
 
 import android.content.Context;
 import android.content.res.TypedArray;

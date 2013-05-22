@@ -32,7 +32,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.customprogrammingsolutions.cpsolutions.R;
+import com.cpsolutions.R;
 
 public class GoogleAccountListActivity extends ListActivity {
     protected AccountManager accountManager;

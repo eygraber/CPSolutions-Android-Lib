@@ -18,7 +18,7 @@ package com.cpsolutions.android.accounts;
 
 import java.io.IOException;
 
-import com.customprogrammingsolutions.cpsolutions.R;
+import com.cpsolutions.R;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;

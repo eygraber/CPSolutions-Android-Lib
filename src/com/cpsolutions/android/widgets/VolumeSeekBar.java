@@ -16,7 +16,7 @@
 
 package com.cpsolutions.android.widgets;
 
-import com.customprogrammingsolutions.cpsolutions.R;
+import com.cpsolutions.R;
 
 import android.content.Context;
 import android.content.res.TypedArray;

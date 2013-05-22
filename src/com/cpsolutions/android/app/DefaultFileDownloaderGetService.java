@@ -31,7 +31,7 @@ import com.cpsolutions.net.InitHttpRequest;
 import com.cpsolutions.net.NameValuePair;
 import com.cpsolutions.utils.DateTimeUtils;
 import com.cpsolutions.utils.FileUtils;
-import com.customprogrammingsolutions.cpsolutions.R;
+import com.cpsolutions.R;
 
 public class DefaultFileDownloaderGetService extends AbsFileDownloaderService { 
 	public static String CREATE_NOTIFICATION_INTENT_EXTRA = "com.cpsolution.android.app.DefaultFileDownloaderGetService.CREATE_NOTIFICATION_INTENT";
