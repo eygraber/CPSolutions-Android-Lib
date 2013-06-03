@@ -35,13 +35,12 @@ public class VolumeSeekBar extends SeekBar implements OnSeekBarChangeListener {
 	}
 	private OnVolumeChangeListener vcl = null;
 	
+	public VolumeSeekBar(Context context) {
+		super(context);
+	}
+	
 	public VolumeSeekBar(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		init(context, attrs);
-	}
-
-	public VolumeSeekBar(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
 		init(context, attrs);
 	}
 	
@@ -86,10 +85,12 @@ public class VolumeSeekBar extends SeekBar implements OnSeekBarChangeListener {
 		}
 		
 		float v = (float) ( currentStreamVolume / 100);
-		int startingValue = (int) ( android.util.FloatMath.ceil(maxVolume * v) );
+		int startingValue = (int) ( Math.ceil(maxVolume * v) );
 		setProgress(startingValue);
 		incrementProgressBy(1);
 		setOnSeekBarChangeListener(this);
+		
+		a.recycle();
 	}
 	
 	public void setProgressView(TextView progressView){
@@ -98,13 +99,13 @@ public class VolumeSeekBar extends SeekBar implements OnSeekBarChangeListener {
 	
 	public void setProgressFromVolume(int volume){
 		float v = (float) ( (float)volume / maxVolume);
-		int progress = (int) ( android.util.FloatMath.ceil(100 * v) );
+		int progress = (int) ( Math.ceil(100 * v) );
 		setProgress(progress);
 	}
 	
 	public int getVolume(){
 		float v = (float) ( (float)getProgress() / 100);
-		int vol = (int) ( android.util.FloatMath.ceil(maxVolume * v) );
+		int vol = (int) ( Math.ceil(maxVolume * v) );
 		return vol;
 	}
 	
