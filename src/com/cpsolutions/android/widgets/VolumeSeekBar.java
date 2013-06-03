@@ -47,7 +47,7 @@ public class VolumeSeekBar extends SeekBar implements OnSeekBarChangeListener {
 	private void init(Context context, AttributeSet attrs){
 		setMax(100);
 		
-		TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.VolumeSeekBar);
+		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.VolumeSeekBar, 0, 0);
 		int streamType = 0;
 		float currentStreamVolume = 50;
 		
