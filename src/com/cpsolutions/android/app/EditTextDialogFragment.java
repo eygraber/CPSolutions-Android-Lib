@@ -3,6 +3,7 @@ package com.cpsolutions.android.app;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.InputType;
 import android.widget.EditText;
 
 public class EditTextDialogFragment extends ConfirmationDialogFragment implements ConfirmationDialogFragment.OnPositiveButtonClickListener {
@@ -54,6 +55,7 @@ public class EditTextDialogFragment extends ConfirmationDialogFragment implement
 		
 		editText = new EditText(getActivity());
 		editText.setText(args.getString(INITIAL_VALUE_EXTRA));
+		editText.setInputType(InputType.TYPE_CLASS_TEXT);
 		
 		builder.setView(editText);
 	}
