@@ -55,7 +55,7 @@ public class EditTextDialogFragment extends ConfirmationDialogFragment implement
 		
 		editText = new EditText(getActivity());
 		editText.setText(args.getString(INITIAL_VALUE_EXTRA));
-		editText.setInputType(InputType.TYPE_CLASS_TEXT);
+		editText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
 		
 		builder.setView(editText);
 	}
