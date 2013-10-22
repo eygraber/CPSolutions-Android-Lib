@@ -33,4 +33,6 @@
     <string name="changelog_version_format">Version <xliff:g id="version_name">%s</xliff:g></string>
     <!-- /Change Log -->
     
+    <string name="ringtone_picker_title">Ringtone</string>
+    
 </resources>
