@@ -103,8 +103,24 @@ public class Logger extends IntentService {
 		}
 	}
 	
-	public static void setStartServiceContext(Context context) {
+	public static void init(Context context) {
 		startServiceContext = new WeakReference<Context>(context);
+	}
+	
+	public static void init(Context context, String tag) {
+		startServiceContext = new WeakReference<Context>(context);
+		TAG = tag;
+	}
+	
+	public static void init(Context context, boolean logToAndroidDefault) {
+		startServiceContext = new WeakReference<Context>(context);
+		LOG_TO_ANDROID_DEFAULT = logToAndroidDefault;
+	}
+	
+	public static void init(Context context, String tag, boolean logToAndroidDefault) {
+		startServiceContext = new WeakReference<Context>(context);
+		TAG = tag;
+		LOG_TO_ANDROID_DEFAULT = logToAndroidDefault;
 	}
 	
 	private static void log(String message, Throwable t, int level, boolean logToAndroid) {
