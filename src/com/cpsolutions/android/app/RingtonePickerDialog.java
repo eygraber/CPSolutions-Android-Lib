@@ -170,7 +170,13 @@ public class RingtonePickerDialog extends ListFragment {
 		public void run() {
 			ringtones = new HashSet<RingtoneInfo>();
 			
-			defaultRingtone = RingtoneManager.getActualDefaultRingtoneUri(getActivity(), RingtoneManager.TYPE_ALL).toString();
+			try {
+				defaultRingtone = RingtoneManager.getActualDefaultRingtoneUri(getActivity(), RingtoneManager.TYPE_ALL).toString();
+			}
+			catch(Exception e) {
+				Logger.e("Device probably doesn't have a default ringtone...just set default to blank", e);
+				defaultRingtone = "";
+			}
 			
 			try {
 				getAudioMedia(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI);
@@ -259,6 +265,7 @@ public class RingtonePickerDialog extends ListFragment {
 				getListView().post(new Runnable() {
 					@Override
 					public void run() {
+						setEmptyText("There is no media that can be used as a ringtone!");
 						setListAdapter(adapter);
 					}
 				});

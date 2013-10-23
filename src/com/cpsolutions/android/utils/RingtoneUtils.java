@@ -2,6 +2,7 @@ package com.cpsolutions.android.utils;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -86,13 +87,21 @@ public class RingtoneUtils {
 		}
 		catch(Exception e) {
 			Logger.e("Can't get display name for audio from URI from the MediaStore...trying the RingtoneManager");
+
 			if(cursor != null && !cursor.isClosed()) {
 				cursor.close();
 			}
-			name = RingtoneManager.getRingtone(context, contentUri).getTitle(context);
-			if(name == null) {
+			Ringtone ringtone = RingtoneManager.getRingtone(context, contentUri);
+			if(ringtone == null) {
 				Logger.e("Couldn't get it from RingtoneManager either");
 				name = "Couldn't get ringtone display name";
+			}
+			else {
+				name = ringtone.getTitle(context);
+				if(name == null) {
+					Logger.e("Couldn't get it from RingtoneManager either");
+					name = "Couldn't get ringtone display name";
+				}
 			}
 			return name;
 		}
