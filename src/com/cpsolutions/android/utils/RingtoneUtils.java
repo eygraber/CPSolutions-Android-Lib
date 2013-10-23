@@ -86,7 +86,9 @@ public class RingtoneUtils {
 		}
 		catch(Exception e) {
 			Logger.e("Can't get display name for audio from URI from the MediaStore...trying the RingtoneManager");
-			cursor.close();
+			if(cursor != null && !cursor.isClosed()) {
+				cursor.close();
+			}
 			name = RingtoneManager.getRingtone(context, contentUri).getTitle(context);
 			if(name == null) {
 				Logger.e("Couldn't get it from RingtoneManager either");
