@@ -16,12 +16,17 @@ import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CompoundButton;
+import android.widget.EditText;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -236,6 +241,19 @@ public class RingtonePickerDialog extends ListFragment {
 					}
 				});
 				
+				((EditText)v.findViewById(R.id.ringtone_picker_filter)).addTextChangedListener(new TextWatcher() {
+					@Override
+					public void onTextChanged(CharSequence s, int start, int before, int count) {
+						ringtonePicker.adapter.getFilter().filter(s);
+					}
+
+					@Override
+					public void afterTextChanged(Editable arg0) {}
+					@Override
+					public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+					
+				});
+				
 				return v;
 			}
 		};
@@ -368,13 +386,16 @@ public class RingtonePickerDialog extends ListFragment {
 		}
 	}
 	
-	private class RingtoneListAdapter extends BaseAdapter {
+	private class RingtoneListAdapter extends BaseAdapter implements Filterable {
 		private ArrayList<RingtoneInfo> ringtoneArray;
+		private ArrayList<RingtoneInfo> filteredRingtoneArray;
 		private LayoutInflater inflater;
 		
+		@SuppressWarnings("unchecked")
 		public RingtoneListAdapter(HashSet<RingtoneInfo> ringtoneSet) {
 			ringtoneArray = new ArrayList<RingtoneInfo>(ringtoneSet);
 			Collections.sort(ringtoneArray);
+			filteredRingtoneArray = (ArrayList<RingtoneInfo>) ringtoneArray.clone();
 			
 			if(getActivity() != null) {
 				inflater = getActivity().getLayoutInflater();
@@ -383,12 +404,12 @@ public class RingtonePickerDialog extends ListFragment {
 		
 		@Override
 		public int getCount() {
-			return ringtoneArray.size();
+			return filteredRingtoneArray.size();
 		}
 
 		@Override
 		public RingtoneInfo getItem(int position) {
-			return ringtoneArray.get(position);
+			return filteredRingtoneArray.get(position);
 		}
 
 		@Override
@@ -445,6 +466,37 @@ public class RingtonePickerDialog extends ListFragment {
 	        convertView.setTag(holder);
 	        
 	        return convertView;
+		}
+		
+		@Override
+		public Filter getFilter() {
+			return new Filter() {
+				@SuppressWarnings("unchecked")
+				@Override
+				protected FilterResults performFiltering(CharSequence filterString) {
+					FilterResults results = new FilterResults();
+					
+					if(filterString == null || filterString.length() == 0) {
+						//there shouldn't be any reason why we need to use FilterResults
+						filteredRingtoneArray = (ArrayList<RingtoneInfo>) ringtoneArray.clone();
+					}
+					else {
+						filteredRingtoneArray = new ArrayList<RingtoneInfo>();
+						for(RingtoneInfo ringtone : ringtoneArray) {
+							if(ringtone.name.toLowerCase(Locale.ENGLISH).startsWith(filterString.toString().toLowerCase(Locale.ENGLISH))) {
+								filteredRingtoneArray.add(ringtone);
+							}
+						}
+					}
+					
+					return results;
+				}
+				
+				@Override
+				protected void publishResults(CharSequence filterString, FilterResults filterResults) {
+					notifyDataSetChanged();
+				}
+			};
 		}
 	}
 	
