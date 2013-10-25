@@ -208,56 +208,64 @@ public class RingtonePickerDialog extends ListFragment {
 	
 	public RingtonePickerDialog() {}
 	
-	public static void show(final Activity activity, final FragmentManager fm, String tag, final String selectedRingtone, final OnRingtonePickedListener listener) {
-		DialogFragment d = new DialogFragment() {
-
-			@Override
-			public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-				View v = inflater.inflate(R.layout.ringtone_picker, container, false);
-				
-				getDialog().setTitle(getString(R.string.ringtone_picker_title));
-				getDialog().setCancelable(false);
-				setCancelable(false);
-				
-				final RingtonePickerDialog ringtonePicker = new RingtonePickerDialog();
-				ringtonePicker.dialogContainer = this;
-				ringtonePicker.selectedRingtone = selectedRingtone;
-				getChildFragmentManager().beginTransaction().add(R.id.ringtone_picker_container, ringtonePicker).commit();
-				
-				v.findViewById(R.id.ringtone_picker_cancel).setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						dismiss();
-					}
-				});
-				
-				v.findViewById(R.id.ringtone_picker_ok).setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						if(listener != null) {
-							listener.ringtonePicked(ringtonePicker.selectedRingtone);
-						}
-						dismiss();
-					}
-				});
-				
-				((EditText)v.findViewById(R.id.ringtone_picker_filter)).addTextChangedListener(new TextWatcher() {
-					@Override
-					public void onTextChanged(CharSequence s, int start, int before, int count) {
-						ringtonePicker.adapter.getFilter().filter(s);
-					}
-
-					@Override
-					public void afterTextChanged(Editable arg0) {}
-					@Override
-					public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-					
-				});
-				
-				return v;
-			}
-		};
+	public static void show(FragmentManager fm, String tag, String selectedRingtone, OnRingtonePickedListener listener) {
+		RingtonePickerContainerDialogFragment d = new RingtonePickerContainerDialogFragment();
+		d.selectedRingtone = selectedRingtone;
+		d.listener = listener;
 		d.show(fm, tag);		
+	}
+	
+	public static class RingtonePickerContainerDialogFragment extends DialogFragment {
+		private String selectedRingtone;
+		private OnRingtonePickedListener listener;
+		
+		public RingtonePickerContainerDialogFragment() {}
+		
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+			View v = inflater.inflate(R.layout.ringtone_picker, container, false);
+			
+			getDialog().setTitle(getString(R.string.ringtone_picker_title));
+			getDialog().setCancelable(false);
+			setCancelable(false);
+			
+			final RingtonePickerDialog ringtonePicker = new RingtonePickerDialog();
+			ringtonePicker.dialogContainer = this;
+			ringtonePicker.selectedRingtone = selectedRingtone;
+			getChildFragmentManager().beginTransaction().add(R.id.ringtone_picker_container, ringtonePicker).commit();
+			
+			v.findViewById(R.id.ringtone_picker_cancel).setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					dismiss();
+				}
+			});
+			
+			v.findViewById(R.id.ringtone_picker_ok).setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if(listener != null) {
+						listener.ringtonePicked(ringtonePicker.selectedRingtone);
+					}
+					dismiss();
+				}
+			});
+			
+			((EditText)v.findViewById(R.id.ringtone_picker_filter)).addTextChangedListener(new TextWatcher() {
+				@Override
+				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					ringtonePicker.adapter.getFilter().filter(s);
+				}
+
+				@Override
+				public void afterTextChanged(Editable arg0) {}
+				@Override
+				public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+				
+			});
+			
+			return v;
+		}
 	}
 	
 	@Override
