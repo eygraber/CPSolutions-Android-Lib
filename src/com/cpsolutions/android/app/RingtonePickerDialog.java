@@ -477,6 +477,7 @@ public class RingtonePickerDialog extends ListFragment {
 					FilterResults results = new FilterResults();
 					
 					if(filterString == null || filterString.length() == 0) {
+						Logger.i("Filtering ringtones with null or empty");
 						//there shouldn't be any reason why we need to use FilterResults
 						filteredRingtoneArray = (ArrayList<RingtoneInfo>) ringtoneArray.clone();
 					}
@@ -487,6 +488,7 @@ public class RingtonePickerDialog extends ListFragment {
 								filteredRingtoneArray.add(ringtone);
 							}
 						}
+						Logger.i("Filtering ringtones using " + filterString + " gives us " + filteredRingtoneArray.size() + " results");
 					}
 					
 					return results;
