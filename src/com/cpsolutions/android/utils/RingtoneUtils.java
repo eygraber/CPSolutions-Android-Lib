@@ -17,7 +17,20 @@ public class RingtoneUtils {
 			if(cursor.getCount() > 0) {
 				return true;
 			}
-			cursor.close();
+		}
+		catch(Exception e) {
+			Logger.e("Error checking MediaStore to see if URI is a ringtone", e);
+			return false;
+		}
+		finally {
+			if(cursor != null && !cursor.isClosed()) {
+				cursor.close();
+			}
+		}
+		
+		Logger.w("Didn't find ringtone in MediaStore...checking RingtoneManager");
+		
+		try {
 			RingtoneManager rm = new RingtoneManager(context);
 			rm.setType(RingtoneManager.TYPE_ALL);
 			cursor = rm.getCursor();
@@ -26,25 +39,21 @@ public class RingtoneUtils {
 			}
 			do {
 				try {
-					if(contentUri.toString().equals(cursor.getString(RingtoneManager.URI_COLUMN_INDEX))) {
+					if(contentUri.toString().equals(cursor.getString(RingtoneManager.URI_COLUMN_INDEX) + "/" + cursor.getString(RingtoneManager.ID_COLUMN_INDEX))) {
 						return true;
 					}
 				}
 				catch(Exception e) {
-					Logger.e("Couldn't get ringtone info", e);
+					Logger.w("Couldn't get ringtone info - checking next ringtone if there is one", e);
 					continue;
 				}
 			} while(cursor.moveToNext());
+			Logger.w("Didn't find ringtone in RingtoneManager...guess it doesn't exist");
 			return false;
 		}
 		catch(Exception e) {
-			Logger.e("Error checking if URI is a ringtone", e);
+			Logger.e("Error checking RingtoneManager if URI is a ringtone", e);
 			return false;
-		}
-		finally {
-			if(cursor != null && !cursor.isClosed()) {
-				cursor.close();
-			}
 		}
 	}
 	
@@ -76,39 +85,45 @@ public class RingtoneUtils {
 			String[] proj = { MediaStore.Audio.Media.DISPLAY_NAME };
 			String[] whereArgs = { contentUri.getLastPathSegment() };
 			cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, proj, MediaStore.Audio.Media._ID + "=?", whereArgs, null);
-			cursor.moveToFirst();
-			int column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME);
-			name = cursor.getString(column_index);
-			int extensionPos = name.lastIndexOf(".");
-			if(extensionPos != -1) {
-				name = name.substring(0, extensionPos);
+			if(cursor.moveToFirst()) {
+				int column_index = cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME);
+				name = cursor.getString(column_index);
+				int extensionPos = name.lastIndexOf(".");
+				if(extensionPos != -1) {
+					name = name.substring(0, extensionPos);
+				}
+				return name;
 			}
-			return name;
 		}
 		catch(Exception e) {
-			Logger.e("Can't get display name for audio from URI from the MediaStore...trying the RingtoneManager");
-
-			if(cursor != null && !cursor.isClosed()) {
-				cursor.close();
-			}
-			Ringtone ringtone = RingtoneManager.getRingtone(context, contentUri);
-			if(ringtone == null) {
-				Logger.e("Couldn't get it from RingtoneManager either");
-				name = "Couldn't get ringtone display name";
-			}
-			else {
-				name = ringtone.getTitle(context);
-				if(name == null) {
-					Logger.e("Couldn't get it from RingtoneManager either");
-					name = "Couldn't get ringtone display name";
-				}
-			}
-			return name;
+			Logger.e("Error trying to get the display name from the MediaStore...trying the RingtoneManager");
 		}
 		finally {
 			if(cursor != null && !cursor.isClosed()) {
 				cursor.close();
 			}
+		}
+		
+		Logger.w("Didn't find the display name in MediaStore...checking RingtoneManager");
+		
+		try {
+			Ringtone ringtone = RingtoneManager.getRingtone(context, contentUri);
+			if(ringtone == null) {
+				Logger.w("Didn't find the display name in RingtoneManager...guess it doesn't exist");
+				name = "Couldn't get ringtone display name";
+			}
+			else {
+				name = ringtone.getTitle(context);
+				if(name == null) {
+					Logger.w("Didn't find the display name in RingtoneManager...guess it doesn't exist");
+					name = "Couldn't get ringtone display name";
+				}
+			}
+			return name;
+		}
+		catch(Exception e) {
+			Logger.e("Error trying to get the display name from the RingtoneManager");
+			return "Couldn't get ringtone display name";
 		}
     }
 }
