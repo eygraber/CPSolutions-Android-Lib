@@ -288,15 +288,27 @@ public class RingtonePickerDialog extends ListFragment {
 				}
 				
 				adapter = new RingtoneListAdapter(ringtones);
-				getListView().post(new Runnable() {
-					@Override
-					public void run() {
-						setEmptyText("There is no media that can be used as a ringtone!");
-						setListAdapter(adapter);
-					}
-				});
+				try {
+					getListView().post(new Runnable() {
+						@Override
+						public void run() {
+							setEmptyText("There is no media that can be used as a ringtone!");
+							setListAdapter(adapter);
+						}
+					});
+				}
+				catch(Exception e) {
+					Logger.e("Tried to get the list view before it was instantiated", e);
+				}
 			}
 		});
+	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		
+		Logger.i("Starting the worker thread");
 		worker.start();
 	}
 	
