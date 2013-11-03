@@ -37,6 +37,8 @@ public class RateMeMaybe implements RMMFragInterface {
         private Boolean mHandleCancelAsNeutral = true;
 
         private Boolean mRunWithoutPlayStore = false;
+        
+        private String rmmFragmentTag = "dialog";
 
         public interface OnRMMUserChoiceListener {
                 void handlePositive();
@@ -209,6 +211,15 @@ public class RateMeMaybe implements RMMFragInterface {
         public void setRunWithoutPlayStore(Boolean runWithoutPlayStore) {
                 mRunWithoutPlayStore = runWithoutPlayStore;
         }
+        
+        /**
+         * Default is "dialog". The tag to use when showing the fragment.
+         * 
+         * @param tag
+         */
+        public void setFragmentTag(String tag) {
+                rmmFragmentTag = tag;
+        }
 
         /**
          * Reset the launch logs
@@ -230,7 +241,7 @@ public class RateMeMaybe implements RMMFragInterface {
                 RateMeMaybeFragment frag = new RateMeMaybeFragment();
                 frag.setData(getIcon(), getDialogTitle(), getDialogMessage(),
                                 getPositiveBtn(), getNeutralBtn(), getNegativeBtn(), this);
-                frag.show(mActivity.getSupportFragmentManager(), "rmmFragment");
+                frag.show(mActivity.getSupportFragmentManager(), rmmFragmentTag);
 
         }
 
