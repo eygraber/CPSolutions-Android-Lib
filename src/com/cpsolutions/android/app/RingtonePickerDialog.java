@@ -254,6 +254,9 @@ public class RingtonePickerDialog extends ListFragment {
 			((EditText)v.findViewById(R.id.ringtone_picker_filter)).addTextChangedListener(new TextWatcher() {
 				@Override
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
+					if(ringtonePicker == null || ringtonePicker.adapter == null) {
+						return;
+					}
 					ringtonePicker.adapter.getFilter().filter(s);
 				}
 
