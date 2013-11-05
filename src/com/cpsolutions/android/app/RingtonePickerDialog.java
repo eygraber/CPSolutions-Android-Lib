@@ -99,8 +99,10 @@ public class RingtonePickerDialog extends ListFragment {
 		private void getAudioMedia(Uri internalOrExternal) {
 			String[] projec = {MediaStore.Audio.Media._ID, MediaStore.Audio.Media.DATA, MediaStore.Audio.Media.DISPLAY_NAME};
 			Cursor c = getActivity().getContentResolver().query(internalOrExternal, projec, null, null, null);
-			if(c == null || !c.moveToFirst()) {
-				c.close();
+			if(c != null && !c.moveToFirst()) {
+				if(!c.isClosed()) {
+					c.close();
+				}
 				return;
 			}
 			do {
