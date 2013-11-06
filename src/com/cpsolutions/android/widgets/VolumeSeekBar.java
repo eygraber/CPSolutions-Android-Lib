@@ -30,7 +30,7 @@ public class VolumeSeekBar extends SeekBar implements OnSeekBarChangeListener {
 	private int maxVolume = 0;
 	private TextView progressView = null;
 	
-	public interface OnVolumeChangeListener{
+	public interface OnVolumeChangeListener {
 		public void onVolumeChanged();
 	}
 	private OnVolumeChangeListener vcl = null;
@@ -44,7 +44,7 @@ public class VolumeSeekBar extends SeekBar implements OnSeekBarChangeListener {
 		init(context, attrs);
 	}
 	
-	private void init(Context context, AttributeSet attrs){
+	private void init(Context context, AttributeSet attrs) {
 		setMax(100);
 		
 		TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.VolumeSeekBar, 0, 0);
@@ -93,17 +93,17 @@ public class VolumeSeekBar extends SeekBar implements OnSeekBarChangeListener {
 		a.recycle();
 	}
 	
-	public void setProgressView(TextView progressView){
+	public void setProgressView(TextView progressView) {
 		this.progressView = progressView;
 	}
 	
-	public void setProgressFromVolume(int volume){
+	public void setProgressFromVolume(int volume) {
 		float v = (float) ( (float)volume / maxVolume);
 		int progress = (int) ( Math.ceil(100 * v) );
 		setProgress(progress);
 	}
 	
-	public int getVolume(){
+	public int getVolume() {
 		float v = (float) ( (float)getProgress() / 100);
 		int vol = (int) ( Math.ceil(maxVolume * v) );
 		return vol;
@@ -114,7 +114,7 @@ public class VolumeSeekBar extends SeekBar implements OnSeekBarChangeListener {
 	}
 
 	@Override
-	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser){
+	public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 		int newValue = progress;
 		
 		if(newValue > seekBar.getMax())
