@@ -30,6 +30,14 @@
     	<attr format="string" name="summary_text_size" />
     </declare-styleable>
     
+    <declare-styleable name="StandardSeekBar">
+    	<attr format="string" name="sseek_bar_min" />
+    	<attr format="string" name="sseek_bar_max" />
+    	<attr format="string" name="sseek_bar_unit" />
+    	<attr format="string" name="sseek_bar_interval" />
+    	<attr format="string" name="sseek_bar_start_at" />
+    </declare-styleable>
+    
     <declare-styleable name="VolumeSeekBar">
     	<attr name="streamType">
     	    <enum name="alarm" value="0" />

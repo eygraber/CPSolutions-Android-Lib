@@ -24,7 +24,7 @@ public class AudioUtils {
 		final AudioManager audioManager = (AudioManager)caller.getSystemService(Context.AUDIO_SERVICE);
 		float maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);
 		float v = ( volume / maxVolume );
-		int adjustedVolume = (int) ( android.util.FloatMath.ceil(100 * v) );
+		int adjustedVolume = (int) ( java.lang.Math.ceil(100 * v) );
 		return adjustedVolume;
 	}
 	
@@ -32,7 +32,11 @@ public class AudioUtils {
 		final AudioManager audioManager = (AudioManager)caller.getSystemService(Context.AUDIO_SERVICE);
 		float maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);
 		float v = ( volume / 100 );
-		int adjustedVolume = (int) ( android.util.FloatMath.ceil(maxVolume * v) );
+		int adjustedVolume = (int) ( java.lang.Math.ceil(maxVolume * v) );
 		return adjustedVolume;
+	}
+	
+	public static float getMediaPlayerScaledVolume(int maxVolume, int nonScalarVolume) {
+		return (float) (1 - (Math.log(maxVolume - nonScalarVolume) / Math.log(maxVolume)));
 	}
 }
