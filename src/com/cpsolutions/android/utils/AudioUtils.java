@@ -40,6 +40,16 @@ public class AudioUtils {
 		if(maxVolume == 0) {
 			return 0;
 		}
-		return (float) nonScalarVolume / maxVolume;
+		if(nonScalarVolume > maxVolume) {
+			return 1;
+		}
+		float result = (float) nonScalarVolume / maxVolume;
+		if(result > 1) {
+			result = 1;
+		}
+		if(result < 0) {
+			result = 0;
+		}
+		return result;
 	}
 }
