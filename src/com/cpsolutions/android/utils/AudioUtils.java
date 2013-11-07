@@ -37,6 +37,9 @@ public class AudioUtils {
 	}
 	
 	public static float getMediaPlayerScaledVolume(int maxVolume, int nonScalarVolume) {
-		return (float) (1 - (Math.log(maxVolume - nonScalarVolume) / Math.log(maxVolume)));
+		if(maxVolume == 0) {
+			return 0;
+		}
+		return (float) nonScalarVolume / maxVolume;
 	}
 }
