@@ -1,4 +1,4 @@
-package com.cpsolutions.android.net;
+package com.cpsolutions.android.utils;
 
 import android.os.Parcel;
 import android.os.Parcelable;
