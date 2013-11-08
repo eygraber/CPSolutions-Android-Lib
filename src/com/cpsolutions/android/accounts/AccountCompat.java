@@ -8,7 +8,7 @@ import android.os.Build;
 
 public class AccountCompat {
 	@SuppressLint("NewApi")
-	private void startGoogleAccountPickerActivity(Activity activity, int requestCode) {
+	public static void startGoogleAccountPickerActivity(Activity activity, int requestCode) {
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
 			activity.startActivityForResult(AccountManager.newChooseAccountIntent(null, null, new String[] {"com.google"}, false, null, null, null, null), requestCode);
     	}
