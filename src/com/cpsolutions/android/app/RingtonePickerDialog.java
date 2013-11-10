@@ -105,6 +105,9 @@ public class RingtonePickerDialog extends ListFragment {
 				}
 				return;
 			}
+			if(c == null) {
+				return;
+			}
 			do {
 				try {
 					int uriIndex = c.getColumnIndex(MediaStore.Audio.Media.DATA);
