@@ -223,6 +223,7 @@ public class RingtonePickerDialog extends ListFragment {
 	public static class RingtonePickerContainerDialogFragment extends DialogFragment {
 		private String selectedRingtone;
 		private OnRingtonePickedListener listener;
+		private TextWatcher textChangeListener;
 		
 		public RingtonePickerContainerDialogFragment() {}
 		
@@ -256,7 +257,7 @@ public class RingtonePickerDialog extends ListFragment {
 				}
 			});
 			
-			((EditText)v.findViewById(R.id.ringtone_picker_filter)).addTextChangedListener(new TextWatcher() {
+			textChangeListener = new TextWatcher() {
 				@Override
 				public void onTextChanged(CharSequence s, int start, int before, int count) {
 					if(ringtonePicker == null || ringtonePicker.adapter == null) {
@@ -270,9 +271,22 @@ public class RingtonePickerDialog extends ListFragment {
 				@Override
 				public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 				
-			});
+			};
+			
+			((EditText)v.findViewById(R.id.ringtone_picker_filter)).addTextChangedListener(textChangeListener);
 			
 			return v;
+		}
+		
+		@Override
+		public void onDestroyView() {
+			try {
+				((EditText)getView().findViewById(R.id.ringtone_picker_filter)).removeTextChangedListener(textChangeListener);
+			}
+			catch(Exception e) {
+				Logger.e("Error trying to remove the text change listener from the ringtone filter EditText", e);
+			}
+			super.onDestroyView();
 		}
 	}
 	
