@@ -44,6 +44,11 @@ public class GoogleAccountInfoActivity extends Activity {
             Intent intent = getIntent();
             AccountManager accountManager = AccountManager.get(getApplicationContext());
             Account account = (Account)intent.getExtras().get("account");
+            if(account == null) {
+            	setResult(RESULT_CANCELED);
+            	finish();
+            	return;
+            }
             accountManager.getAuthToken(account, "ah", null, this, new GetAuthTokenCallback(), null);
     }
     
