@@ -1,7 +1,11 @@
 bin
 
-market_res
-
 gen
 
+.gradle
+
+build
+
 lint.xml
+
+local.properties
