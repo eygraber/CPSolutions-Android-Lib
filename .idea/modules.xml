@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/android_support_v7_appcompat/android_support_v7_appcompat.iml" filepath="$PROJECT_DIR$/android_support_v7_appcompat/android_support_v7_appcompat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/cpsolutions_android_lib.iml" filepath="$PROJECT_DIR$/cpsolutions_android_lib.iml" />
+    </modules>
+  </component>
+</project>
+
