@@ -19,21 +19,29 @@ package com.cpsolutions.android.utils;
 import android.content.Context;
 import android.media.AudioManager;
 
-public class AudioUtils {
-	public static int getVolumeAdjustedForGlobal(int volume, Context caller) {
-		final AudioManager audioManager = (AudioManager)caller.getSystemService(Context.AUDIO_SERVICE);
-		float maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);
-		float v = ( volume / maxVolume );
-		int adjustedVolume = (int) ( java.lang.Math.ceil(100 * v) );
-		return adjustedVolume;
+public class AudioUtils {	
+	public static int getWeightUsedOnStreamVolume(Context context, int streamType, double volume) {
+		return getWeightUsedOnStreamVolume((AudioManager)context.getSystemService(Context.AUDIO_SERVICE), streamType, volume);
 	}
 	
-	public static int getVolumeAdjustedForDevice(float volume, Context caller) {
-		final AudioManager audioManager = (AudioManager)caller.getSystemService(Context.AUDIO_SERVICE);
-		float maxVolume = audioManager.getStreamMaxVolume(AudioManager.STREAM_ALARM);
-		float v = ( volume / 100 );
-		int adjustedVolume = (int) ( java.lang.Math.ceil(maxVolume * v) );
-		return adjustedVolume;
+	public static int getWeightUsedOnStreamVolume(AudioManager am, int streamType, double volume) {
+		int maxVolume = am.getStreamMaxVolume(streamType);
+		if(volume > maxVolume) {
+			return maxVolume;
+		}
+		return (int) Math.ceil((volume / (double) maxVolume) * 100.00);
+	}
+	
+	public static int getWeightedStreamVolume(Context context, int streamType, double weight) {
+		return getWeightedStreamVolume((AudioManager)context.getSystemService(Context.AUDIO_SERVICE), streamType, weight);
+	}
+	
+	public static int getWeightedStreamVolume(AudioManager am, int streamType, double weight) {
+		int maxVolume = am.getStreamMaxVolume(streamType);
+		if(weight > 100) {
+			return maxVolume;
+		}
+		return (int) Math.ceil((double) maxVolume * (weight / 100.00));
 	}
 	
 	public static float getMediaPlayerScaledVolume(int maxVolume, int nonScalarVolume) {
