@@ -14,6 +14,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.cpsolutions.android.rating.RateMeMaybeFragment.RMMFragInterface;
+import com.cpsolutions.android.utils.Logger;
 
 public class RateMeMaybe implements RMMFragInterface {
         private static final String TAG = "RateMeMaybe";
@@ -241,7 +242,12 @@ public class RateMeMaybe implements RMMFragInterface {
                 RateMeMaybeFragment frag = new RateMeMaybeFragment();
                 frag.setData(getIcon(), getDialogTitle(), getDialogMessage(),
                                 getPositiveBtn(), getNeutralBtn(), getNegativeBtn(), this);
-                frag.show(mActivity.getSupportFragmentManager(), rmmFragmentTag);
+                try {
+                	frag.show(mActivity.getSupportFragmentManager(), rmmFragmentTag);
+                }
+                catch(Exception e) {
+                	Logger.e("Couldn't show the RateMeDialog", e);
+                }
 
         }
 
