@@ -21,7 +21,7 @@ public class Logger extends IntentService {
 	private static final String LOG_MESSAGE_EXTRA = "log_message_extra";
 	private static final String LOG_THROWABLE_EXTRA = "log_throwable_extra";
 	
-	private static String TAG = "Logger";
+	private static String TAG = "Alarm";
 	private static boolean LOG_TO_ANDROID_DEFAULT = false;
 	private static WeakReference<Context> startServiceContext;
 	
@@ -31,7 +31,7 @@ public class Logger extends IntentService {
 	
 	@Override
 	protected void onHandleIntent(Intent intent) {
-		if(!intent.hasExtra(LOG_MESSAGE_EXTRA)) {
+		if(intent == null || !intent.hasExtra(LOG_MESSAGE_EXTRA)) {
 			Log.e(TAG, "Logger.onHandleIntent() - no message");
 			return;
 		}
