@@ -21,8 +21,9 @@ public class Logger extends IntentService {
 	private static final String LOG_MESSAGE_EXTRA = "log_message_extra";
 	private static final String LOG_THROWABLE_EXTRA = "log_throwable_extra";
 	
-	private static String TAG = "Alarm";
+	private static String TAG = "Logger";
 	private static boolean LOG_TO_ANDROID_DEFAULT = false;
+	private static int LOG_MAX_SIZE = 1024 * 512;
 	private static WeakReference<Context> startServiceContext;
 	
 	public Logger() {
@@ -50,7 +51,7 @@ public class Logger extends IntentService {
 					Log.e(TAG, "We got a crash");
 				}
 				if(log.exists()) {
-					if(log.length() > 1024 * 512) { //512KB
+					if(log.length() > LOG_MAX_SIZE) { //512KB
 						log.delete();
 					}
 				}
@@ -112,15 +113,23 @@ public class Logger extends IntentService {
 		TAG = tag;
 	}
 	
-	public static void init(Context context, boolean logToAndroidDefault) {
-		startServiceContext = new WeakReference<Context>(context);
-		LOG_TO_ANDROID_DEFAULT = logToAndroidDefault;
-	}
-	
 	public static void init(Context context, String tag, boolean logToAndroidDefault) {
 		startServiceContext = new WeakReference<Context>(context);
 		TAG = tag;
 		LOG_TO_ANDROID_DEFAULT = logToAndroidDefault;
+	}
+	
+	public static void init(Context context, String tag, int maxLogFileSizeInBytes) {
+		startServiceContext = new WeakReference<Context>(context);
+		TAG = tag;
+		LOG_MAX_SIZE = maxLogFileSizeInBytes;
+	}
+	
+	public static void init(Context context, String tag, boolean logToAndroidDefault, int maxLogFileSizeInBytes) {
+		startServiceContext = new WeakReference<Context>(context);
+		TAG = tag;
+		LOG_TO_ANDROID_DEFAULT = logToAndroidDefault;
+		LOG_MAX_SIZE = maxLogFileSizeInBytes;
 	}
 	
 	private static void log(String message, Throwable t, int level, boolean logToAndroid) {
