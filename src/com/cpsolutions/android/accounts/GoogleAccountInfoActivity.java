@@ -43,6 +43,11 @@ public class GoogleAccountInfoActivity extends Activity {
             super.onResume();
             Intent intent = getIntent();
             AccountManager accountManager = AccountManager.get(getApplicationContext());
+            if(intent.getExtras() == null) {
+            	setResult(RESULT_CANCELED);
+            	finish();
+            	return;
+            }
             Account account = (Account)intent.getExtras().get("account");
             if(account == null) {
             	setResult(RESULT_CANCELED);
