@@ -3,8 +3,6 @@ package com.cpsolutions.android.utils;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.cpsolutions.net.NameValuePair;
-
 public class ParcelableNameValuePair extends NameValuePair implements Parcelable {
 	//////////////////////////////
 	// Parcelable apis
