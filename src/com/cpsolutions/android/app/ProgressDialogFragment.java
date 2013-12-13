@@ -11,17 +11,25 @@ public class ProgressDialogFragment extends DialogFragment {
 	public ProgressDialogFragment() {}
 	
 	public static ProgressDialogFragment show(Context context, FragmentManager manager, int titleRes, int messageRes) {
-		return show(manager, context.getString(titleRes), context.getString(messageRes));
+		return show(manager, context.getString(titleRes), context.getString(messageRes), "dialog");
+	}
+	
+	public static ProgressDialogFragment show(Context context, FragmentManager manager, int titleRes, int messageRes, String tag) {
+		return show(manager, context.getString(titleRes), context.getString(messageRes), tag);
 	}
 	
 	public static ProgressDialogFragment show(FragmentManager manager, String title, String message) {
+		return show(manager, title, message, "dialog");
+	}
+	
+	public static ProgressDialogFragment show(FragmentManager manager, String title, String message, String tag) {
 		ProgressDialogFragment frag = new ProgressDialogFragment();
 		Bundle args = new Bundle();
 		args.putString("title", title);
 		args.putString("message", message);
 		frag.setArguments(args);
 		try {
-			manager.beginTransaction().add(frag, "dialog").commitAllowingStateLoss();
+			manager.beginTransaction().add(frag, tag).commitAllowingStateLoss();
 		} catch(Exception e){}
 		//frag.show(manager, "dialog");
 		return frag;
