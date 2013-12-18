@@ -12,6 +12,8 @@ import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Logger extends IntentService {
 	private static final String LOG_LEVEL_EXTRA = "log_level_extra";
@@ -25,6 +27,8 @@ public class Logger extends IntentService {
 	private static boolean LOG_TO_ANDROID_DEFAULT = false;
 	private static int LOG_MAX_SIZE = 1024 * 512;
 	private static WeakReference<Context> startServiceContext;
+	
+	private static final ExecutorService executor = Executors.newSingleThreadExecutor();
 	
 	public Logger() {
 		super("Logger Service");
@@ -172,6 +176,95 @@ public class Logger extends IntentService {
 				(classNames.length > 0 ? classNames[classNames.length - 1] : ste.getClassName()) + "." + 
 				ste.getMethodName() + "() - " + 
 				message;
+	}
+	
+	private static final class LogTask implements Runnable {
+		private String message;
+		private Throwable t;
+		private int level;
+		private StackTraceElement ste;
+		private boolean logToAndroid;
+		
+		public LogTask(String message, Throwable t, int level, StackTraceElement ste, boolean logToAndroid) {
+			this.message = message;
+			this.t = t;
+			this.level = level;
+			this.ste = ste;
+			this.logToAndroid = logToAndroid;
+		}
+		
+		@Override
+		public void run() {
+			if(logToAndroid) {
+				logToAndroid(createAndroidMessage(message), t, level);
+			}
+			
+			String message = createMessage();
+			if(message == null) {
+				return;
+			}
+
+			if(startServiceContext != null && startServiceContext.get() != null) {
+				try {
+					File log = new File(startServiceContext.get().getFilesDir(), "log");
+					File afterCrash = new File(startServiceContext.get().getFilesDir(), "afterCrash");
+					if(afterCrash.exists()) {
+						afterCrash.delete();
+						Log.e(TAG, "We got a crash");
+					}
+					if(log.exists()) {
+						if(log.length() > LOG_MAX_SIZE) { //512KB
+							log.delete();
+						}
+					}
+
+					PrintWriter pw = new PrintWriter(startServiceContext.get().openFileOutput("log", Context.MODE_APPEND));
+					pw.println(message);
+					pw.close();
+				}
+				catch(Exception e) {
+					Log.e(TAG, "Got an error in LogTask", e);
+				}
+			}
+			else {
+				Log.e(TAG, "Couldn't get a context in LogTask");
+			}
+		}
+		
+		private String createMessage() {
+			String[] classNames = ste.getClassName().split("\\.");
+			String sourceMethod = (classNames.length > 0 ? classNames[classNames.length - 1] : ste.getClassName()) + "." + 
+				ste.getMethodName() + "()";
+			
+			if(t != null) {
+				StringWriter sw = new StringWriter();
+				PrintWriter pw = new PrintWriter(sw);
+				t.printStackTrace(pw);
+				message += "\n" + sw.toString();
+				pw.close();
+			}
+
+			try {
+				JSONObject json = new JSONObject();
+				json.put("LEVEL", printLogLevel(level))
+					.put("SOURCE_FILE", ste.getFileName())
+					.put("SOURCE_LINE", ste.getLineNumber())
+					.put("SOURCE_METHOD", sourceMethod)
+					.put("MESSAGE", message)
+					.put("TIMESTAMP", new Date().getTime());
+				return json.toString();
+
+			}
+			catch(Exception e) {
+				Log.e(TAG, "Could not build the message in Logger.onHandleIntent()", e);
+				return null;
+			}
+		}
+	}
+	
+	private static void executorLog(String message, Throwable t, int level, boolean logToAndroid) {
+		StackTraceElement ste = Thread.currentThread().getStackTrace()[4];
+		executor.execute(new LogTask(message, t, level, ste, logToAndroid));
 	}
 	
 	public static void setTag(String tag) {
